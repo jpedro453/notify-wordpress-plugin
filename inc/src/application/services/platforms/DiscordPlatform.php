@@ -10,7 +10,7 @@ if(!class_exists("GG_DiscordPlatform")){
         public function __construct(string $webhook_url){
             $this->webhook_url = $webhook_url;
         }
-        
+        // FIXME: it should be information on the arguments of sendNotification() 
         public function sendNotification(String $message){
 
         }

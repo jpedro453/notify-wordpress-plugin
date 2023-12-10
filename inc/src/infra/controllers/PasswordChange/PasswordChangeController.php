@@ -23,11 +23,12 @@ class GG_PasswordChangeController {
         $this->platforms = $platforms;
     }
 
-    function handle(){
+    public function handle(){
         if(!user_can($this->user_id, 'administrator')){
             return;
         }
         foreach ($this->platforms as $platform) {
+            // FIXME: it should be information on the arguments of sendNotification() 
             $notificator = new GG_SendNotification($platform, 'mensagem');
             $notificator->execute();
         }

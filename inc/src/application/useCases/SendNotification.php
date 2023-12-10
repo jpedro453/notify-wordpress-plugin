@@ -13,6 +13,7 @@ class GG_SendNotification {
     }
 
     function execute(){
+        // FIXME: it should be information on the arguments of sendNotification() 
         $this->platform->sendNotification($this->message);
     }
 }
