@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/inc/src/domain/entities/PasswordChange.php';
 require_once __DIR__ . '/inc/src/application/services/platforms/Platform.php';
+require_once __DIR__ . '/inc/src/application/useCases/SendNotification.php';
 
 class GG_PasswordChangeController {
 
@@ -26,11 +27,9 @@ class GG_PasswordChangeController {
         if(!user_can($this->user_id, 'administrator')){
             return;
         }
-        $this->sendNotificationToAllPlatforms('mensagem');
-    }
-    public function sendNotificationToAllPlatforms(string $message) {
         foreach ($this->platforms as $platform) {
-            $platform->sendNotification($message);
+            $notificator = new GG_SendNotification($platform, 'mensagem');
+            $notificator->execute();
         }
     }
 }
