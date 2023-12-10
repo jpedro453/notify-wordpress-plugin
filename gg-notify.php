@@ -10,7 +10,17 @@
  */
 
 require_once __DIR__ . '/inc/admin/create-admin-menu.php';
-require_once __DIR__ . '/inc/src/domain/entities/User.php';
+require_once __DIR__ . '/inc/src/domain/entities/PasswordChange.php';
+require_once __DIR__ . '/inc/src/application/services/platforms/DiscordPlatform.php';
+require_once __DIR__ . '/inc/src/infra/controllers/PasswordChangeController/PasswordChangeController.php';
+
+interface IPasswordChangeEntity {
+    public string $ip;
+    public string $date;
+    public string $username;
+    public string $email;
+    public string $login_url;
+}
 
 class GG_Notify {
 
@@ -25,15 +35,22 @@ class GG_Notify {
         create_admin_menu();
     }
     function your_function($user_login, $user) {
-       
-        $gg_user = new GG_User($user->ID, $user->user_display_name, $user->user_email);
+
+        $user_ip = $_SERVER['REMOTE_ADDR'];
+        $date = date('Y-m-d H:i:s');
 
 
+        $platforms = [];
+        $discord_platform = new GG_DiscordPlatform('https://discord.com');
+        array_push($platform, $discord_platform);
+
+        $password_change = new GG_PasswordChange($user_ip, $date, $user_login, $user->ID, $user->user_email, 'wp-admin');
+        $password_change_controller = new GG_PasswordChangeController($password_change, $platforms);
 
         $log_message = sprintf(
             'Usuário %s fez login. Informações do usuário: ID: %d, Nome: %s, Email: %s',
             $user_login,
-            $gg_user->id,
+            $user->ID,
             $user->display_name,
             $user->user_email
         );
@@ -42,10 +59,8 @@ class GG_Notify {
     private function log($message) {
         $log_file = plugin_dir_path(__FILE__) . 'logs/plugin_log.txt';
 
-        // Adiciona a data e hora ao log
         $log_message = '[' . date('Y-m-d H:i:s') . '] ' . $message .  "\n";
 
-        // Escreve no arquivo de log
         error_log($log_message, 3, $log_file);
     }
 

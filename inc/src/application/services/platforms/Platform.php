@@ -1,5 +1,5 @@
 <?php
 
-interface Platform {
+interface IPlatform {
     public function sendNotification(String $message);
 }

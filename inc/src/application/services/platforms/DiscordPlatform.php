@@ -3,7 +3,7 @@
  require_once __DIR__ . '/inc/src/application/controllers/platforms/Platform.php';
 
 if(!class_exists("GG_DiscordPlatform")){
-    class GG_DiscordPlatform implements Platform{
+    class GG_DiscordPlatform implements IPlatform{
 
         public string $webhook_url;
 
