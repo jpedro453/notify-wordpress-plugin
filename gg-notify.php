@@ -47,21 +47,6 @@ class GG_Notify {
         $password_change = new GG_PasswordChange($user_ip, $date, $user_login, $user->ID, $user->user_email, 'wp-admin');
         $password_change_controller = new GG_PasswordChangeController($password_change, $platforms);
 
-        $log_message = sprintf(
-            'Usuário %s fez login. Informações do usuário: ID: %d, Nome: %s, Email: %s',
-            $user_login,
-            $user->ID,
-            $user->display_name,
-            $user->user_email
-        );
-        $this->log($log_message);
-    }
-    private function log($message) {
-        $log_file = plugin_dir_path(__FILE__) . 'logs/plugin_log.txt';
-
-        $log_message = '[' . date('Y-m-d H:i:s') . '] ' . $message .  "\n";
-
-        error_log($log_message, 3, $log_file);
     }
 
     
