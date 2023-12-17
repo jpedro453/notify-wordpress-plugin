@@ -1,7 +1,10 @@
 <?php
-require_once __DIR__ . '/inc/src/domain/entities/PasswordChange.php';
-require_once __DIR__ . '/inc/src/application/services/platforms/Platform.php';
-require_once __DIR__ . '/inc/src/application/useCases/SendNotification.php';
+
+namespace Infra\Controllers;
+
+use Domain\Entities\GG_PasswordChange;
+use Application\Interfaces\IPlatform;
+use Application\UseCases\GG_SendNotificationUseCase;
 
 class GG_PasswordChangeController {
 
@@ -16,7 +19,7 @@ class GG_PasswordChangeController {
 
         foreach ($platforms as $platform) {
             if (!($platform instanceof IPlatform)) {
-                throw new InvalidArgumentException("Todos os elementos do array de plataformas devem ser do tipo IPlatform");
+                return false;
             }
         }
 

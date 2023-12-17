@@ -1,5 +1,6 @@
 <?php
 
+namespace Domain\Entities;
 
 class GG_PasswordChange{
     public string $ip;

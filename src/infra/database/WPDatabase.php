@@ -1,8 +1,10 @@
 <?php
 
-class GG_WPDataBase{
+namespace Src\Infra\Database;
+
+class GG_WPDataBase {
     
-    public function Init(){
+    public function init() {
         global $wpdb;
         $table_name = $wpdb->prefix . "gg_notify";
 
@@ -11,7 +13,9 @@ class GG_WPDataBase{
             $charset_collate = $wpdb->get_charset_collate();
             $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
-                PRIMARY KEY  (id)
+                platform_name varchar(255) NOT NULL,
+                details JSON,
+                PRIMARY KEY (id)
             ) $charset_collate;";
 
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
