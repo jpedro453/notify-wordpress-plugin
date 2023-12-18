@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Entities;
+namespace inc\Domain\Entities;
 
-class GG_PasswordChange{
+class PasswordChange{
     public string $ip;
     public string $date;
     public string $username;

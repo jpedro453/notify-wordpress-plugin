@@ -1,8 +1,8 @@
 <?php
 
-namespace Infra\Services\Platforms;
+namespace inc\infra\services\platforms;
 
-use Application\Interfaces\IPlatform;
+use inc\Application\Interfaces\Platform\IPlatform;
 
 if(!class_exists("GG_DiscordPlatform")){
     class GG_DiscordPlatform implements IPlatform{

@@ -1,8 +1,10 @@
 <?php
 
-use Application\Interfaces\IPlatformDatabase;
+namespace inc\infra\database;
 
-class GG_PlatformsDatabase implements IPlatformDatabase{
+use inc\application\interfaces\Platform\IPlatformDatabase;
+
+class PlatformsDatabase implements IPlatformDatabase{
     
     public function getAllPlatforms() {
         // Implementação...
@@ -21,12 +23,18 @@ class GG_PlatformsDatabase implements IPlatformDatabase{
         $table_name = $wpdb->prefix . "gg_notify";
 
 
-        $existing_platform = $wpdb->get_row("SELECT * FROM $table_name WHERE platform_name = $platformName");
+        $existing_platform = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE platform_name = %s", $platformName));
+
 
         if (!$existing_platform) {
-            $wpdb->insert(
+            $result = $wpdb->insert(
                 $table_name,
+                array(
+                    'platform_name' => $platformName,
+                    'details' => $details
+                )
             );
+            return $result;
         }
 
     }

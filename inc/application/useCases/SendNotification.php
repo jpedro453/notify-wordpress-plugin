@@ -1,10 +1,10 @@
 <?php
 
-namespace Application\UseCases;
+namespace inc\Application\UseCases;
 
-use Application\Interfaces\IPlatform;
+use inc\application\interfaces\Platform\IPlatform;
 
-class GG_SendNotificationUseCase {
+class SendNotificationUseCase {
 
     public int $user_id;
     public IPlatform $platform;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\Infra\Database;
+namespace inc\infra\database;
 
-class GG_WPDataBase {
+class WPDataBase {
     
     public function init() {
         global $wpdb;

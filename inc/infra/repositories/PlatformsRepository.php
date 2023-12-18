@@ -1,9 +1,11 @@
 <?php
 
-use Application\Interfaces\IPlatformRepository;
-use Application\Interfaces\IPlatformDatabase;
+namespace inc\infra\repositories;
 
-class GG_PlatformsRepository implements IPlatformRepository{
+use inc\application\interfaces\Platform\IPlatformRepository;
+use inc\application\interfaces\Platform\IPlatformDatabase;
+
+class PlatformsRepository implements IPlatformRepository{
 
     public IPlatformDatabase $database;
 
@@ -12,7 +14,7 @@ class GG_PlatformsRepository implements IPlatformRepository{
     }
     
     public function create($platform_name, $details){
-        $this->database->createPlatform('name', 'details');
+        $this->database->createPlatform($platform_name, $details);
 
     }
     public function getAll(){

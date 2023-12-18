@@ -2,9 +2,9 @@
 
 namespace Infra\Controllers;
 
-use Domain\Entities\GG_PasswordChange;
-use Application\Interfaces\IPlatform;
-use Application\UseCases\GG_SendNotificationUseCase;
+use inc\Domain\Entities\PasswordChange;
+use inc\Application\Interfaces\Platform\IPlatform;
+use inc\Application\UseCases\SendNotificationUseCase;
 
 class GG_PasswordChangeController {
 
@@ -13,7 +13,7 @@ class GG_PasswordChangeController {
 
     public array $platforms = [];
 
-    public function __construct(GG_PasswordChange $password_change, array $platforms) {
+    public function __construct(PasswordChange $password_change, array $platforms) {
         $this->password_change = $password_change;
         $this->user_id = $password_change->user_id;
 
@@ -30,7 +30,7 @@ class GG_PasswordChangeController {
         
         foreach ($this->platforms as $platform) {
             // FIXME: it should be information on the arguments of sendNotification() 
-            $notificator = new GG_SendNotificationUseCase($this->user_id, $platform, 'mensagem');
+            $notificator = new SendNotificationUseCase($this->user_id, $platform, 'mensagem');
             $notificator->execute();
         }
     }
