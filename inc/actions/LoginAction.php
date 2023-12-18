@@ -3,6 +3,7 @@
 use inc\infra\database\PlatformsDatabase;
 use inc\infra\repositories\PlatformsRepository;
 use inc\infra\services\platforms\DiscordPlatform;
+use Infra\Controllers\LoginController;
 
 add_action('wp_login', function($user_login, $user) {
 
@@ -13,8 +14,9 @@ add_action('wp_login', function($user_login, $user) {
 
     foreach($platforms as $platform){
         if($platform['platform_name'] == 'discord'){
-            $webhook_url = json_decode($platform->details);
-            $service = new DiscordPlatform($webhook_url);
+            
+            $controller = new LoginController($user);
+            // $controller->execute();
 
 
 
