@@ -15,7 +15,7 @@ require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 use inc\Infra\Database\PlatformsDatabase;
 use inc\Infra\Database\WPDataBase;
 use admin\AdminPage;
-
+use inc\infra\services\platforms\DiscordPlatform;
 
 class GG_Notify {
 
@@ -23,6 +23,14 @@ class GG_Notify {
         $this->init();
     }
     function init() {
+        global $wpdb;
+        $discord = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gg_notify WHERE platform_name = 'discord'")[0];
+        $webhook_url = json_decode($discord->details);
+        var_dump($webhook_url);
+
+        $discordPlatform = new DiscordPlatform($webhook_url->webhook_url);
+        // $resultado = $discordPlatform->sendNotification('a');
+
         // $database = new WPDataBase();
         // $database->init();
         $platform = new PlatformsDatabase();

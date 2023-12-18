@@ -27,7 +27,6 @@ function ef_handle_submit($platforms) {
     }
 }
 
-// Verifique se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ef_handle_submit($platforms);
 }

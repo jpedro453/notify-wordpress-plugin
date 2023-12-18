@@ -18,7 +18,7 @@ class PlatformsRepository implements IPlatformRepository{
 
     }
     public function getAll(){
-        $this->database->getAllPlatforms();
+        return $this->database->getAllPlatforms();
     }
     public function update(){
         $this->database->updatePlatform();

@@ -7,7 +7,10 @@ use inc\application\interfaces\Platform\IPlatformDatabase;
 class PlatformsDatabase implements IPlatformDatabase{
     
     public function getAllPlatforms() {
-        // Implementação...
+        global $wpdb;
+        $platforms = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gg_notify");
+
+        return $platforms;
     }
 
     public function updatePlatform() {

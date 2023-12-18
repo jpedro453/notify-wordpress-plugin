@@ -6,7 +6,7 @@ use inc\Domain\Entities\PasswordChange;
 use inc\Application\Interfaces\Platform\IPlatform;
 use inc\Application\UseCases\SendNotificationUseCase;
 
-class GG_PasswordChangeController {
+class PasswordChangeController {
 
     public $password_change;
     public $user_id;
