@@ -2,8 +2,8 @@
 
 namespace inc\infra\repositories;
 
-use inc\application\interfaces\Platform\IPlatformRepository;
-use inc\application\interfaces\Platform\IPlatformDatabase;
+use inc\domain\interfaces\Database\IPlatformRepository;
+use inc\domain\interfaces\Database\IPlatformDatabase;
 
 class PlatformsRepository implements IPlatformRepository{
 
@@ -16,6 +16,11 @@ class PlatformsRepository implements IPlatformRepository{
     public function create($platform_name, $details){
         $this->database->createPlatform($platform_name, $details);
 
+    }
+    public function getByName($name)
+    {
+        return $this->database->getByName($name);
+        
     }
     public function getAll(){
         return $this->database->getAllPlatforms();

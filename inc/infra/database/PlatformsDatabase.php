@@ -2,7 +2,7 @@
 
 namespace inc\infra\database;
 
-use inc\application\interfaces\Platform\IPlatformDatabase;
+use inc\domain\interfaces\Database\IPlatformDatabase;
 
 class PlatformsDatabase implements IPlatformDatabase{
     
@@ -12,7 +12,15 @@ class PlatformsDatabase implements IPlatformDatabase{
 
         return $platforms;
     }
-
+    public function getByName($name) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "gg_notify";
+        
+        $existing_platform = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE platform_name = %s", $name));
+        
+        return $existing_platform;
+        
+    }
     public function updatePlatform() {
         // Implementação...
     }
