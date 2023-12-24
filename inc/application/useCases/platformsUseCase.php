@@ -12,5 +12,7 @@ class platformsUseCase {
         $this->repository = $repository;
     }
 
-    public function ()
+    public function getPlatform($name) {
+
+    }
 }

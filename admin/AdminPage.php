@@ -57,9 +57,9 @@ function ef_handle_submit($platforms) {
 }
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    ef_handle_submit($platforms);
-}
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     ef_handle_submit($platforms);
+// }
 
 class AdminPage {
     function createMenu(){
@@ -74,10 +74,9 @@ class AdminPage {
         add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
     }
     function render() { 
+        $plugin_dir = plugin_dir_path(__FILE__);
 
-        $isDiscordActive = isPlatformActive('discord');
-        $webhookDiscord = $isDiscordActive ? getWebhookUrl('discord') : '';
-        // get_template_part(plugin_dir_path(__FILE__) . "/form/AdminForm", null, array( "platforms" => $platforms));
+        require_once $plugin_dir . "form/AdminForm.php";
     }
 
     function load_admin_style($hook) {

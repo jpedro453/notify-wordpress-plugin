@@ -7,5 +7,6 @@ interface IPlatformRepository{
     public function getByName($name);
     public function create($platform_name, $details);
     public function update($platform_name, $active, $details);
+    public function getDetail($name, $detail);
     public function delete($name);
 }

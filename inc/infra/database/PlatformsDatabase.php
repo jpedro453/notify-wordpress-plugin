@@ -21,6 +21,20 @@ class PlatformsDatabase implements IPlatformDatabase{
         return $existing_platform;
         
     }
+
+    public function getDetail($name, $detail) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "gg_notify";
+
+        $sql = $wpdb->prepare(
+            "SELECT DISTINCT json_unquote(json_extract(details, '$.\"$detail\"')) AS key_result
+            FROM $table_name
+            WHERE platform_name = %s;",
+            $name
+        );
+        return $wpdb->get_var($sql);
+    }
+    
     public function updatePlatform($platformName, $active, $details) {
         global $wpdb;
         $table_name = $wpdb->prefix . "gg_notify";
