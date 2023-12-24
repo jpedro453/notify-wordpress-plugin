@@ -1,16 +1,15 @@
 <?php
 
-namespace inc\infra\services\platforms;
+namespace inc\Infra\Services\Platforms;
 
-use inc\Domain\Interfaces\Services\INotificationService;
+use inc\Domain\Interfaces\Services\IPlatformService;
 
 
-class DiscordPlatform implements INotificationService{
+class DiscordPlatform implements IPlatformService{
 
-    public array $details;
-    public string $name = 'discord';
+    private array $details;
 
-    public function __construct(array $details = array('name', 'webhook_url'),){
+    public function __construct($details){
         $this->details = $details;
     }
     // FIXME: it should be information on the arguments of sendNotification() 
@@ -49,9 +48,6 @@ class DiscordPlatform implements INotificationService{
         curl_close($ch);
     
         return $resultado;
-    }
-    public function getName() {
-        return $this->name; // Substitua por lógica real, se necessário
     }
     
 }

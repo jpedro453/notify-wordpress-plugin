@@ -1,14 +1,14 @@
 <?php
 
-namespace inc\infra\database;
+namespace inc\Infra\Database;
 
-use inc\domain\interfaces\Database\IPlatformDatabase;
+use inc\Domain\Interfaces\Database\IPlatformDatabase;
 
 class PlatformsDatabase implements IPlatformDatabase{
     
     public function getAllPlatforms() {
         global $wpdb;
-        $platforms = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gg_notify");
+        $platforms = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}gg_notify WHERE active = true");
 
         return $platforms;
     }
@@ -21,12 +21,35 @@ class PlatformsDatabase implements IPlatformDatabase{
         return $existing_platform;
         
     }
-    public function updatePlatform() {
-        // Implementação...
+    public function updatePlatform($platformName, $active, $details) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "gg_notify";
+
+        $existingPlatform = $this->getByName($platformName);
+
+        if (!$existingPlatform) return;
+
+        $result = $wpdb->update(
+            $table_name,
+            array(
+                'active' => true, // Você pode ajustar conforme necessário
+                'details' => $details
+            ),
+            array('platform_name' => $platformName)
+        );
+
+        return $result !== false;
+        
+
     }
 
-    public function deletePlatform() {
-        // Implementação...
+    public function deletePlatform($name) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . "gg_notify";
+        
+        $existing_platform = $wpdb->get_row($wpdb->prepare("DELETE * FROM $table_name WHERE platform_name = %s", $name));
+        
+        return $existing_platform;
     }
 
     public function createPlatform($platformName, $details) {
@@ -36,17 +59,17 @@ class PlatformsDatabase implements IPlatformDatabase{
 
         $existing_platform = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE platform_name = %s", $platformName));
 
+        if($existing_platform) return;
 
-        if (!$existing_platform) {
-            $result = $wpdb->insert(
-                $table_name,
-                array(
-                    'platform_name' => $platformName,
-                    'details' => $details
-                )
-            );
-            return $result;
-        }
+        $result = $wpdb->insert(
+            $table_name,
+            array(
+                'platform_name' => $platformName,
+                'active' => true,
+                'details' => $details
+            )
+        );
+        return $result;
 
     }
 }

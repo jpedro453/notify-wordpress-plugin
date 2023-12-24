@@ -1,9 +1,9 @@
 <?php
 
-namespace inc\infra\repositories;
+namespace inc\Infra\Repositories;
 
-use inc\domain\interfaces\Database\IPlatformRepository;
-use inc\domain\interfaces\Database\IPlatformDatabase;
+use inc\Domain\Interfaces\Database\IPlatformRepository;
+use inc\Domain\Interfaces\Database\IPlatformDatabase;
 
 class PlatformsRepository implements IPlatformRepository{
 
@@ -25,12 +25,12 @@ class PlatformsRepository implements IPlatformRepository{
     public function getAll(){
         return $this->database->getAllPlatforms();
     }
-    public function update(){
-        $this->database->updatePlatform();
+    public function update($platform_name, $active, $details){
+        $this->database->updatePlatform($platform_name, $active, $details);
         
     }
-    public function delete(){
-        $this->database->deletePlatform();
+    public function delete($name){
+        $this->database->deletePlatform($name);
         
     }
 }

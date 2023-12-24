@@ -1,6 +1,6 @@
 <?php
 
-namespace inc\infra\database;
+namespace inc\Infra\Database;
 
 class WPDataBase {
     
@@ -13,6 +13,7 @@ class WPDataBase {
             $charset_collate = $wpdb->get_charset_collate();
             $sql = "CREATE TABLE $table_name (
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
+                active boolean NOT NULL,
                 platform_name varchar(255) NOT NULL,
                 details JSON,
                 PRIMARY KEY (id)

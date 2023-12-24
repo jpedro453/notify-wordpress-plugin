@@ -1,21 +1,21 @@
 <?php
 
-namespace Infra\Controllers;
+namespace inc\Infra\Controllers;
 
 use inc\Application\UseCases\sendNotificationUseCase;
-use inc\domain\interfaces\Database\IPlatformRepository;
-use inc\Domain\Interfaces\Services\INotificationService;
-use inc\infra\repositories\PlatformsRepository;
+use inc\Domain\Interfaces\Database\IPlatformRepository;
+use inc\Domain\Interfaces\Services\INotificatorService;
+use inc\Infra\Services\Platforms\Notificator;
 use WP_User;
 
 class ActionsController {
     public $user;
-    public INotificationService $notificator;
+    public INotificatorService $notificator;
     public IPlatformRepository $repository;
 
-    public function __construct(WP_User $user, INotificationService $notificator, IPlatformRepository $repository) {
+    public function __construct(WP_User $user, IPlatformRepository $repository) {
         $this->user = $user;
-        $this->notificator = $notificator;
+        $this->notificator = new Notificator();
         $this->repository = $repository;
     }
 

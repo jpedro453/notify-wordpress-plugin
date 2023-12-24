@@ -2,30 +2,60 @@
 
 namespace admin;
 
-use inc\infra\database\PlatformsDatabase;
-use inc\infra\repositories\PlatformsRepository;
+use inc\Infra\Database\PlatformsDatabase;
+use inc\Infra\Repositories\PlatformsRepository;
 
 $platforms = array();
 
-if (isset($_POST['discord'])) {
-    $discord = array(
-        'name' => 'discord',
-        'details' => array(
-           'webhook_url' => $_POST['webhook_discord'] ?? null
-        )
-    );
+function isPlatformActive($platformName) {
+    $database = new PlatformsDatabase();
+    $repository = new PlatformsRepository($database);
 
-    array_push($platforms, $discord);
+    $existingPlatform = $repository->getByName($platformName);
+
+    return $existingPlatform->active ? true : false;
 }
+
+function getWebhookUrl($platformName) {
+    $database = new PlatformsDatabase();
+    $repository = new PlatformsRepository($database);
+
+    $existingPlatform = $repository->getByName($platformName);
+
+    return $existingPlatform ? json_decode($existingPlatform->details)->webhook_url : '';
+}
+
+
+$discord = array(
+    'name' => 'discord',
+    'active' => isset($_POST['discord']) ? true : false,
+    'details' => array(
+        'webhook_url' => $_POST['webhook_discord'] ?? null
+    )
+);
+
+array_push($platforms, $discord);
+
 
 function ef_handle_submit($platforms) {
     $database = new PlatformsDatabase();
     $repository = new PlatformsRepository($database);
 
     foreach ($platforms as $platform) {
-        $repository->create($platform['name'], json_encode($platform['details']));
+        $platformName = $platform['name'];
+        $active = $platform['active'];
+        $details = json_encode($platform['details']);
+
+        $existingPlatform = $repository->getByName($platformName);
+
+        if ($existingPlatform) {
+            $repository->update($platformName, $active, $details);
+        } else {
+            $repository->create($platformName, $details);
+        }
     }
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ef_handle_submit($platforms);
@@ -44,26 +74,10 @@ class AdminPage {
         add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
     }
     function render() { 
-        ?>
-        <div id="ef-admin-page">
-            <div class="ef-tabs">
-                <button class="ef-tab">Ações</button>
-                <button class="ef-tab">Configurações</button>
-                <button class="ef-tab">Informações</button>
-            </div>
-        </div>
-        <form id="ef-form" method="POST">
-            <input type="checkbox" name="discord" id="ef-discord-checkbox">
-            <label for="ef-discord-checkbox">Discord</label>
-            <input type="text" name="webhook_discord" id="ef-discord" placeholder="Webhook do Discord">
-            
-            <!-- <input type="checkbox" name="email" id="ef-email-checkbox">
-            <label for="ef-email-checkbox">Email</label>
-            <input type="text" name="receptor_email" id="ef-email" placeholder="Recebedor do email"> -->
 
-            <input type="submit" value="Save">
-        </form>
-        <?php 
+        $isDiscordActive = isPlatformActive('discord');
+        $webhookDiscord = $isDiscordActive ? getWebhookUrl('discord') : '';
+        // get_template_part(plugin_dir_path(__FILE__) . "/form/AdminForm", null, array( "platforms" => $platforms));
     }
 
     function load_admin_style($hook) {

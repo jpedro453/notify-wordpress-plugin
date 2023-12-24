@@ -3,8 +3,7 @@
 namespace inc\Application\UseCases;
 
 use inc\Domain\Interfaces\Database\IPlatformRepository;
-use inc\Domain\Interfaces\Services\IDiscordPlatform;
-use inc\Domain\Interfaces\Services\INotificationService;
+use inc\Domain\Interfaces\Services\INotificatorService;
 
 class sendNotificationUseCase {
 
@@ -12,7 +11,7 @@ class sendNotificationUseCase {
     private $platformRepository;
     private $notificator;
 
-    public function __construct($data, IPlatformRepository $platformRepository, INotificationService $notificator) {
+    public function __construct($data, IPlatformRepository $platformRepository, INotificatorService $notificator) {
         $this->data = $data;
         $this->platformRepository = $platformRepository;
         $this->notificator = $notificator;
