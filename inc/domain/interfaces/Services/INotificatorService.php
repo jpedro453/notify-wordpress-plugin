@@ -3,5 +3,5 @@
 namespace inc\Domain\Interfaces\Services;
 
 interface INotificatorService {
-    public function sendNotification();
+    public function sendNotification($name, $details);
 }

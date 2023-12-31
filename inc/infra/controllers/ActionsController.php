@@ -13,15 +13,15 @@ class ActionsController {
     public INotificatorService $notificator;
     public IPlatformRepository $repository;
 
-    public function __construct(WP_User $user, IPlatformRepository $repository) {
+    public function __construct(WP_User $user, IPlatformRepository $repository, INotificatorService $notificator) {
         $this->user = $user;
-        $this->notificator = new Notificator();
+        $this->notificator = $notificator;
         $this->repository = $repository;
     }
 
     public function handleLogin(){
-        $useCase = new sendNotificationUseCase($this->user, $this->repository, $this->notificator,);
-        // $useCase->sendNotification();
+        $useCase = new sendNotificationUseCase($this->user, $this->repository, $this->notificator);
+        $useCase->sendNotification();
     }
 
 

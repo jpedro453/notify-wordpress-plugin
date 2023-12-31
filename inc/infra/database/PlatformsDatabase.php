@@ -12,6 +12,7 @@ class PlatformsDatabase implements IPlatformDatabase{
 
         return $platforms;
     }
+    
     public function getByName($name) {
         global $wpdb;
         $table_name = $wpdb->prefix . "gg_notify";

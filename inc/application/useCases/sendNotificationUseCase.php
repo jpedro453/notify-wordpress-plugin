@@ -22,7 +22,7 @@ class sendNotificationUseCase {
         $platforms = $this->platformRepository->getAll();
 
         foreach($platforms as $platform){
-            $this->notificator->sendNotification($this->data, $platform->name);
+            $this->notificator->sendNotification($platform->platform_name, $platform->details);
         }
 
             

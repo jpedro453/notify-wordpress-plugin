@@ -3,14 +3,14 @@
 namespace inc\infra\services\platforms;
 
 use inc\Domain\Interfaces\Services\INotificatorService;
-use inc\Infra\Services\EmailPlatform;
+use inc\Infra\Services\Platforms\EmailPlatform;
 use inc\Infra\Services\Platforms\DiscordPlatform;
 
 class Notificator implements INotificatorService{
 
 
-    private $name;
-    private $details;
+    private $title;
+    private $description;
     
     private function platformMap($name, $details) {
 
@@ -26,14 +26,13 @@ class Notificator implements INotificatorService{
         }
     }
 
-    public function sendNotification() {
+    public function sendNotification($name, $details) {
 
-        $platform = $this->platformMap($this->name, $this->details);
+        $platform = $this->platformMap($name, $details);
 
-        if ($platform) {
-            $platform->sendNotification();
-        } else {
-            return "Objeto não encontrado para o nome: $this->name";
-        }
+        if(!$platform) return "Objeto não encontrado para o nome: $name";
+        
+        $platform->sendNotification($this->title, $this->description);
+        
     }
 }

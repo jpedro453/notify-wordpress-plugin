@@ -1,18 +1,18 @@
 <?php
 
-namespace inc\Infra\Services;
+namespace inc\Infra\Services\Platforms;
 
 use inc\Domain\Interfaces\Services\IPlatformService;
 
 
 class EmailPlatform implements IPlatformService{
 
-    private array $details;
+    private $details;
 
     public function __construct($details) {
         $this->details = $details;
     }
 
-    public function sendNotification(){}
+    public function sendNotification($title, $description){}
 
 }

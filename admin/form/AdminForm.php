@@ -8,6 +8,8 @@ $platform_repository = new PlatformsRepository($platform_database);
 
 $discord_webhook = $platform_repository->getDetail("discord", "webhook_url");
 
+$platforms = array();
+
 $discord = array(
     'name' => 'discord',
     'active' => isset($_POST['discord']) ? true : false,
